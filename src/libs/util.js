@@ -82,18 +82,17 @@ util.delRow = function (rowId, uid, vm) {
             });
         }
     });
-};
-// http://yj.kiy.cn/
-// http://yj.kiy.cn:9504
+};  
 // http://localhost:38407
 // http://localhost:8089/api
-// window.location.protocol
-const locationProtocol = window.location.protocol;
-const ajaxUrl = env === 'development'
-? locationProtocol + '//localhost:8089/api/'
-: env === 'production'
-? locationProtocol + '//192.168.0.91:9152/'
-: locationProtocol + '//192.168.0.91:9152/'; 
+// window.location.protocol 
+const  ajaxUrl = window.location.protocol+'//'+window.location.host+"/"; 
+
+// const ajaxUrl = env === 'development'
+// ? locationProtocol + '//localhost:8089/api/'
+// : env === 'production'
+// ? locationProtocol + '//192.168.0.91:9152/'
+// : locationProtocol + '//192.168.0.91:9152/'; 
 util.ajax = axios.create({
     baseURL: ajaxUrl,
     timeout: 30000,
@@ -184,11 +183,11 @@ util.postApiData = function (param, url) {
             });
 };
 
-util.getLoginData = function (param) {
+util.getLoginData = function (param) { 
     const data = Object.assign(param, {}, {
 
     });
-    var en = encode(JSON.stringify(data));
+    var en = encode(JSON.stringify(data));  
     return axios.post(ajaxUrl + 'BackStage/Login/Login',
                 param
                 ).then((res) => {

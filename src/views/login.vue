@@ -62,12 +62,12 @@
         </div>
     </div>
 </template>
-
+ 
 <script>
     import Cookies from 'js-cookie';
     import Util from '../libs/util';
+    const basePath=  window.location.protocol+'//'+window.location.host+"/";
 
-    
     export default {
         data () {
             return {
@@ -83,13 +83,14 @@
                     password: [
                     { required: true, message: '密码不能为空', trigger: 'blur' }
                     ]
-                },
-                checkCodeImg: 'http://yj.kiy.cn/BackStage/Login/GetCheckCode'+'?time=' + new Date().getTime(),
+                },  
+                  checkCodeImg: basePath+ 'BackStage/Login/GetCheckCode'+'?time=' + new Date().getTime(),
+           
                 isCheck: false,
                 subNum: 0,
                 backgroundDom: true,
                 showQR: false,
-                qr:'http://yj.kiy.cn/Areas/Web/Content/images/wx_wait.gif'
+                qr:basePath+'Areas/Web/Content/images/wx_wait.gif'
             };
         },
         methods: {
@@ -97,8 +98,8 @@
                 var _this = this;
                 this.showQR = !this.showQR
                 if(this.showQR) {
-                    _this.qr = 'http://yj.kiy.cn/Areas/Web/Content/images/wx_wait.gif'
-                    Util.postApiData({} , '/Global/HotUpdate/GetLoginQRCode').then(res => {
+                    _this.qr = basePath+ 'Areas/Web/Content/images/wx_wait.gif'
+                    Util.postApiData({} , 'Global/HotUpdate/GetLoginQRCode').then(res => {
                         _this.qr = res.qrUrl
                         _this.checkQRcode(res.key)
                     })
@@ -107,7 +108,7 @@
             checkQRcode(key) {
                 var _this = this;
                 var tim = setInterval(() => {
-                    Util.postApiData({} , '/Global/HotUpdate/CheckLogin?key='+ key ).then(res => {
+                    Util.postApiData({} , 'Global/HotUpdate/CheckLogin?key='+ key ).then(res => {
                         if(res.success){
                             clearInterval(tim)
                             Cookies.set('user', res.TrueName);
@@ -128,10 +129,11 @@
                 }, 1000);
             },
             getCheckCode () {
-                this.isCheck = true;
-                this.checkCodeImg = 'http://yj.kiy.cn/BackStage/Login/GetCheckCode'+'?time=' + new Date().getTime();
+                this.isCheck = true; 
+                this.checkCodeImg = basePath+'BackStage/Login/GetCheckCode'+'?time=' + new Date().getTime();
             },
             handleSubmit () {
+                 
                 var jsonP = { "username": this.form.userName, "password": this.form.password , "checkCode": this.form.checkCode}
                 var _this = this;
                 Util.getLoginData(jsonP).then((res) => {

@@ -72,9 +72,11 @@ import env from '../../../build/env';
         },
         methods: {
             handleSuccess2 (res, file) {
+                var basePath=  window.location.protocol+'//'+window.location.host+"/";
+
                 this.$emit('on-change',res);
                 // 因为上传过程为实例，这里模拟添加 url
-                file.url = 'http://yj.kiy.cn/' + res;
+                file.url = basePath + res;
                 file.name = file.name;
                 this.uploadList.push(file)
             },
@@ -131,7 +133,9 @@ import env from '../../../build/env';
         if(env == 'development'){
             this.apiAction = 'http://localhost:8089/api/Global/PublicOperation/UploadPic'
         }else if(env == 'production'){
-            this.apiAction = 'http://yj.kiy.cn/Global/PublicOperation/UploadPic'
+              var basePath=  window.location.protocol+'//'+window.location.host+"/";
+
+            this.apiAction = basePath+'/Global/PublicOperation/UploadPic'
         }
     }
 };

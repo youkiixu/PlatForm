@@ -97,8 +97,8 @@
             			} else if(typeof(row[key]) == 'string') {
             				this.pubForm[key] = row[key] ;
             			}
-            		}
-            		this.$refs.imageUpload.loadImage('http://yj.kiy.cn/' + row.LogoPath)
+            		} 
+					this.$refs.imageUpload.loadImage( window.location.protocol+'//'+window.location.host+"/" + row.LogoPath)
             	},
             	showModal(type) {
                     // type为0是新增，type为1是修改
