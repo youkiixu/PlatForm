@@ -51,16 +51,22 @@ module.exports = merge(webpackBaseConfig, {
         historyApiFallback: true,
         hot: true,
         inline: true,
-        stats: { colors: true },
-        port: 8089//,
-        // proxy: {
-        //   '/api': {  
-        // //  target: 'http://localhost:22669',
-        //     // target: 'http://192.168.30.37:22669',
-        //     pathRewrite: {'^/api' : ''},
-        //     changeOrigin: true
-        //   }
-        // }
+        stats: {
+            colors: true
+        },
+        port: 8089,
+        proxy: {
+            '/api': {
+                target: 'http://yj.kiy.cn',
+                //  target: 'http://localhost:22669',
+                // target: 'http://192.168.30.37:22669',
+                // target: 'http://192.168.0.91:9152',
+                pathRewrite: {
+                    '^/api': ''
+                },
+                changeOrigin: true
+            }
+        }
 
     }
 });
