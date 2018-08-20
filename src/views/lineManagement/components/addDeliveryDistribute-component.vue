@@ -191,7 +191,7 @@
         var userInfo = JSON.parse(Cookies.get('userInfo'));
         var delivery = this.value
         var arr = []
-        _this.roadList((item) => {
+        _this.roadList.map((item) => {
           // status=1是已经有配送员的区域 selected是已经选中
           if(item.status != 1 && item.selected){
 

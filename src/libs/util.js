@@ -73,8 +73,8 @@ util.delRow = function (rowId, uid, vm) {
                 'rowState': 'D'
             };
             util.getAjaxData(par, undefined, uid).then((data) => {
-                if (data.errMsg || data.result != 'ok') {
-                    vm.$Message.error(data.errMsg);
+                if (data.map.errMsg || data.map.result != 'ok') {
+                    vm.$Message.error(data.map.errMsg);
                     return false;
                 }
                 vm.$Message.success('删除！');
@@ -82,17 +82,19 @@ util.delRow = function (rowId, uid, vm) {
             });
         }
     });
-};  
+};
+// http://yj.kiy.cn/
+// http://yj.kiy.cn:9504
 // http://localhost:38407
 // http://localhost:8089/api
-// window.location.protocol 
-const  ajaxUrl = window.location.protocol+'//'+window.location.host+"/"; 
+// window.location.protocol
+const locationProtocol = window.location.protocol;
+const ajaxUrl = env === 'development'
+? locationProtocol + '//localhost:8089/api/'
+: env === 'production'
+? locationProtocol + '//yj.kiy.cn/'
+: locationProtocol + '//yj.kiy.cn/';
 
-// const ajaxUrl = env === 'development'
-// ? locationProtocol + '//localhost:8089/api/'
-// : env === 'production'
-// ? locationProtocol + '//192.168.0.91:9152/'
-// : locationProtocol + '//192.168.0.91:9152/'; 
 util.ajax = axios.create({
     baseURL: ajaxUrl,
     timeout: 30000,
@@ -173,21 +175,36 @@ util.postOtherApi = function (param, url) {
             });
 };
 
+util.postKiyApi = function (param, url) {
+    // param = {model : param}
+    return axios.post(ajaxUrl + '/global/post/post',
+        {
+            url: url,
+            method: 'POST',
+            param: JSON.stringify(param)
+        }
+    ).then((res) => {
+        return Promise.resolve(res.data);
+    }).catch((e) => {
+        return Promise.reject(e);
+    });
+};
+
 util.postApiData = function (param, url) {
     return axios.post(ajaxUrl + url,
             param
-            ).then((res) => { 
+            ).then((res) => {
                 return Promise.resolve(res.data);
             }).catch((e) => {
                 return Promise.reject(e);
             });
 };
 
-util.getLoginData = function (param) { 
+util.getLoginData = function (param) {
     const data = Object.assign(param, {}, {
 
     });
-    var en = encode(JSON.stringify(data));  
+    var en = encode(JSON.stringify(data));
     return axios.post(ajaxUrl + 'BackStage/Login/Login',
                 param
                 ).then((res) => {
@@ -223,8 +240,8 @@ util.getAjaxData = function (param, strMethod, uid) {
         if (res.status == 500) {
 
         }
-        if (res.status == 200) {  
-            return Promise.resolve( res.data);
+        if (res.status == 200) {
+            return Promise.resolve(res.data);
         }
     }).catch((e) => {
         console.log(e);
@@ -260,17 +277,17 @@ util.getDataGrid = function (param, strMethod, uid, vm) {
         if (res.status == 500) {
 
         }
-        if (res.status == 200) { 
-            if (res.data.result == 'err') {
+        if (res.status == 200) {
+            if (res.data.map.result == 'err') {
                 vm.$Loading.error();
                 if (env == 'development') {
                     vm.$Notice.error({
-                        title: res.data.errMsg,
-                        desc: res.data.sysError
+                        title: res.data.map.errMsg,
+                        desc: res.data.map.sysError
                     });
                 } else {
                     vm.$Notice.error({
-                        title: res.data.errMsg,
+                        title: res.data.map.errMsg,
                         desc: '操作失败，请正确操作'
                     });
                 }
@@ -298,18 +315,18 @@ util.tbSave = function (head, dgData, uid, vm) {
     vm.$Loading.start();
     return new Promise(function (resolve, reject) {
         util.postApiData({data: en }, '/Admins/GetData/GetAjaxData').then((res) => {
-            try { 
-                if (res.result == 'ok') {
+            try {
+                if (res.map.result == 'ok') {
                     vm.$Notice.success({
-                        title: res.msg,
-                        desc: res.msg
+                        title: res.map.msg,
+                        desc: res.map.msg
                     });
                     vm.$Loading.finish();
-                    resolve(res);
+                    resolve(res.map);
                 } else {
                     vm.$Notice.error({
                         title: '操作失败，请正确操作',
-                        desc: res.errMsg
+                        desc: res.map.errMsg
                     });
                     return reject(res);
                     vm.$Loading.error();
@@ -328,7 +345,7 @@ util.tbSave = function (head, dgData, uid, vm) {
 
 util.inOf = function (arr, targetArr) {
     let res = true;
-    arr(item => {
+    arr.map(item => {
         if (targetArr.indexOf(item) < 0) {
             res = false;
         }
@@ -603,7 +620,7 @@ util.initButton = function (vm) {
     };
 
     this.getAjaxData(par, undefined, 'EC0AD0BE-CF94-4CC8-BE92-54B185C97C76').then((res) => {
-       
+        var res = res.map;
         var button = JSON.parse(res.button);
         button.map((item) => {
             vm.buttonGroup.push(item);

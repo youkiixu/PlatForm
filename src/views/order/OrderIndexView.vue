@@ -228,7 +228,7 @@
                         strAddress: userInfo.address
                     }
                     Util.getAjaxData(par, undefined, '18c6f7e0-ef20-4088-b034-50c1ef577e39').then((res) => {
-                        this.form.$rId = res.Code;
+                        this.form.$rId = res.map.Code;
                         this.firstGetData()
                     })
                 } else {
@@ -421,7 +421,7 @@
                         render: (h) => {
                             return h(expressOrderRelation , { 
                                 props: {
-                                    param: res[1].dgData[0],
+                                    param: res[1].map.dgData[0],
                                     param2: res[0]
                                 }
                             })
@@ -449,8 +449,9 @@
                     return
                 }
                 var selectObj = _this.selectGroupArray[0];
-                var money = selectObj.CollectionMoney == null ? 0 : selectObj.CollectionMoney.substr(0, selectObj.CollectionMoney.indexOf('('));
-                var monty = money == "" ? 0 : money;
+                // var money = selectObj.CollectionMoney == null ? 0 : selectObj.CollectionMoney.substr(0, selectObj.CollectionMoney.indexOf('('));
+                // var monty = money == "" ? 0 : money;
+                var monty = parseFloat(selectObj.CollectionMoney)
                 if(monty > 0) {
                     this.$Modal.confirm({
                         title: '确认?',
@@ -461,6 +462,7 @@
                                 strMethod: 'cancelCollection'
                             }
                             Util.getDataGrid(param , undefined , "b8f2d8e2-9b23-4f6e-9ae6-e1ff2da62683" , this).then((res)=> {
+                                console.log(res)
                                 if(res == 1) {
                                     this.$Notice.success({
                                         title: '确认',
@@ -532,7 +534,7 @@
                     }
 
                     Util.getAjaxData(par , undefined , '59e567a2-2592-4cca-a587-4ce08340993c').then((res) => {
-                        var data = res
+                        var data = res.map
                         if(data.result == 'ok'){
                             this.$Notice.success({
                                 title: '操作成功',

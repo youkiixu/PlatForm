@@ -138,7 +138,7 @@
        var arr = new Array();
        var len = this.elements.length;
        var oldArr = this.elements;
-       oldArr((item) => {
+       oldArr.map((item) => {
            arr.push(item.key);
        });
        return arr;
@@ -150,7 +150,7 @@ const toolMap = {};
 function getParJSONByMap (parMap) {
    var par = '{';
    var keyArray = parMap.keys();
-   keyArray((item, index) => {
+   keyArray.map((item, index) => {
        var value = parMap.get(item);
        if (index > 0) {
            par += ',';
@@ -188,7 +188,7 @@ function getParJSONByMap (parMap) {
 	    if (t_ == 'Map') {
 	    	par += '{';
 	    	var keyArray = value.keys();
-	    	keyArray((item, index) => {
+	    	keyArray.map((item, index) => {
 				// var value = parMap.get(item)
                 if (index > 0) {
                     par += ',';

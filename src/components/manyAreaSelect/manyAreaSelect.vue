@@ -154,7 +154,7 @@
     methods: {
       mapSelect (list, value, type) {  // 高亮选中
         if (type) {
-          return list(pitem => {
+          return list.map(pitem => {
             if (pitem.Code === value.Code) {
               if (value.selected && value.selected === true) {
                 this.$delete(pitem, 'selected');
@@ -164,7 +164,7 @@
             }
           })
         } else {
-          return list(pitem => {
+          return list.map(pitem => {
             if (pitem.Code === value.Code) {
               if (value.selected && value.selected === true) {
                 this.$delete(pitem, 'selected');
@@ -270,7 +270,7 @@
           if (this.leftData.length === 1) {  // 长度只有1,那就只有不限城市或者地区了
             let limitId = this.leftData[0].Code.split('-');  // 比对比对,切割成数组
             debugger
-            this.rightDataList(item => {
+            this.rightDataList.map(item => {
               // let id = item.Code.split('-');
               let id = item.Code
               if (limitId[0] === id[0]) {
@@ -326,7 +326,7 @@
               return ritem
             })
           }
-          this.leftData(item => {
+          this.leftData.map(item => {
             this.rightDataList.push(item);
           })
           this.rightDataList = _.uniqBy(this.rightDataList, 'Code');
@@ -341,7 +341,7 @@
         if (item) {
           this.rightData = [];
           // this.mapSelect(this.rightDataList, item, 'manySelect'); // 区域高亮选择,多选
-          // this.rightDataList((ritem) => {
+          // this.rightDataList.map((ritem) => {
           //   if(item.Code != ritem.Code) {
           //     debugger
           //     this.rightData.push(ritem)
@@ -362,7 +362,7 @@
           this.removeAllSelected(this.rightDataList);
           this.rightData = [];
         } else {
-          this.rightDataList(item => this.$set(item, 'selected', true));
+          this.rightDataList.map(item => this.$set(item, 'selected', true));
           this.rightData = this.rightDataList;
         }
         this.selectedAllButtonStatus = !this.selectedAllButtonStatus;
@@ -378,7 +378,7 @@
         }
       },
       removeAllSelected (list) {  // 清空选中状态
-        list(item => this.$delete(item, 'selected'));
+        list.map(item => this.$delete(item, 'selected'));
       },
       getAreaInfo(code) {
         var par = {
@@ -393,8 +393,8 @@
         var rightDataList = this.rightDataList;
         var distric = this.districList;
         this.leftData = []
-        distric((lItem)=>{
-          rightDataList((rItem)=>{
+        distric.map((lItem)=>{
+          rightDataList.map((rItem)=>{
             if(rItem.Code == lItem.Code){
               this.$set(lItem, 'selected', true)
             }

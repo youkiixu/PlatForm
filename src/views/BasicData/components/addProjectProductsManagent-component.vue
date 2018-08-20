@@ -252,7 +252,7 @@
                     _this.formDynamic.materialName = []
                     _this.formDynamic.materialValue = []
                      _this.index = MArr.length;
-                    MArr((item , index) => {
+                    MArr.map((item , index) => {
                         var materialNameItem = item.split(':')[0]
                         var materialValueItem = item.split(':')[1]
                         _this.formDynamic.materialName.push({
@@ -339,8 +339,8 @@
                     }
 
                     Util.getAjaxData(_this.pubForm , undefined , '2ed969a7-d150-4c61-9f39-7b6735ca157e').then((data) => {
-                        if (data.errMsg || data.result != 'ok') {
-                            _this.$Message.error(data.errMsg);
+                        if (data.map.errMsg || data.map.result != 'ok') {
+                            _this.$Message.error(data.map.errMsg);
                             return false;
                         }
                         _this.$Message.success('设置成功！');
@@ -382,8 +382,8 @@
                     }
 
                     Util.getAjaxData(param , undefined , '2ed969a7-d150-4c61-9f39-7b6735ca157e').then((data) => {
-                        if (data.errMsg || data.result != 'ok') {
-                            _this.$Message.error(data.errMsg);
+                        if (data.map.errMsg || data.map.result != 'ok') {
+                            _this.$Message.error(data.map.errMsg);
                             return false;
                         }
                         _this.$Message.success('设置成功！');

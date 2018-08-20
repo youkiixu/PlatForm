@@ -182,7 +182,7 @@
                         UpdateBy: userInfo.userId
                     }
                     Util.getAjaxData(par , undefined , '94df93b2-699b-45a0-8e63-5eaae9ccabaa').then((data) => {
-                        if (data.errMsg || data.map.result != 'ok') {
+                        if (data.errMsg || data.result != 'ok') {
                             _this.$Message.error(data.errMsg);
                             return false;
                         }

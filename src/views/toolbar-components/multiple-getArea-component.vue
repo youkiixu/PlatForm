@@ -57,7 +57,7 @@
                 }
 				_this.cityList2 = []
 				Util.getAjaxData(par , undefined , undefined).then((res) => {
-					var data = res.dgData;
+					var data = res.map.dgData;
 					data.map((item) => {
 						_this.cityList2.push({
 							label: item.Name,
@@ -75,7 +75,7 @@
 				}
 				_this.cityList3 = []
 				// Util.getAjaxData(par , undefined , undefined).then((res) => {
-				// 	var data = res.dgData;
+				// 	var data = res.map.dgData;
 				// 	data.map((item) => {
 				// 		_this.cityList3.push({
 				// 			label: item.Name,
@@ -87,7 +87,7 @@
 			getData() {
                 // console.log(data)
                 var cityList = []
-                this.city2(selectCity => {
+                this.city2.map(selectCity => {
                     this.cityList2.map((item) => {
                         if(item.value == selectCity){
                             cityList.push(item)
@@ -103,7 +103,7 @@
 				if(typeof areaName === 'string') {
 					this.getAreaInfos(areaName)
 				} else {
-					areaName(item => {
+					areaName.map(item => {
 						this.getAreaInfos(item)
 					})
 				}
@@ -133,7 +133,7 @@
                 	strMethod: 'GetAreaInfo'
                 }
                 Util.getAjaxData(par , undefined , undefined).then((res) => {
-                	var data = res.dgData;
+                	var data = res.map.dgData;
                 	data.map((item) => {
                 		_this.cityList1.push({
                 			label: item.Name,

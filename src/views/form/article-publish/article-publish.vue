@@ -234,7 +234,7 @@ export default {
             this.publishTime = datetime;
         },
         setClassificationInAll (selectedArray) {
-            this.classificationFinalSelected = selectedArray(item => {
+            this.classificationFinalSelected = selectedArray.map(item => {
                 return item.title;
             });
             localStorage.classificationSelected = JSON.stringify(this.classificationFinalSelected);  // 本地存储所选目录列表

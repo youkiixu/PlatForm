@@ -83,7 +83,7 @@ export default {
                     return
                 }
                 this.showHtml = true;
-                this.selectGroupArray((row , index) => {
+                this.selectGroupArray.map((row , index) => {
                     num++
                     var money = row.CollectionMoney == null ? 0 : row.CollectionMoney - 0;
                     var par = {

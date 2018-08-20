@@ -302,7 +302,7 @@ v-show="type == 2" ></areaDistributeComponent>
                     
                 },
                 setUsersBox() {
-                     var _this = this;
+                    var _this = this;
                     var userInfo = JSON.parse(Cookies.get('userInfo'));
                 	var par = {
                 		Id : this.param.Id,
@@ -319,7 +319,6 @@ v-show="type == 2" ></areaDistributeComponent>
                     })
              },
              setAdminBox() {
-                 var _this=this;
                 var userInfo = JSON.parse(Cookies.get('userInfo'));
                 var par = {
                         Id : this.param.Id,
@@ -383,14 +382,14 @@ v-show="type == 2" ></areaDistributeComponent>
                         OperBy: userInfo.userId //创建人
                     }
                     Util.getAjaxData(par , undefined ,'946224aa-95c4-4614-b286-760196b2dc3a').then((res) => {
-                        if(res.errMsg){
+                      if(res.errMsg){
                              _this.$Message.error(res.errMsg);
                              return;
                         }
                       _this.$refs.areaDistribute.getSelectList()
                       _this.$refs.areaDistribute.getRoadList()
                       _this.$refs.areaDistribute.spinShow = false
-                       _this.$Message.success('设置成功！');
+                      _this.$Message.success('设置成功！');
                     })
                 }
             },

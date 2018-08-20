@@ -232,7 +232,7 @@ define(
             if (tokens instanceof Token) {
               return new Token(tokens.type, _.util.encode(tokens.content), tokens.alias);
             } else if (_.util.type(tokens) === 'Array') {
-              return tokens(_.util.encode);
+              return tokens.map(_.util.encode);
             } else {
               return tokens.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\u00a0/g, ' ');
             }

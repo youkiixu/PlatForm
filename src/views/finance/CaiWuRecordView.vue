@@ -112,7 +112,7 @@
             },
             onChangeCount(data) {
                  var str = '';
-                    dataap.map((item) => {
+                    data.map((item) => {
                         str += item + ','
                     })
                 this.form.$CountCaiWuTypeId = str.substring(0, str.length - 1)

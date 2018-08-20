@@ -86,7 +86,8 @@ export const appRouter = [
             { access: 1, path: 'QueryOverTimeOrderView', title: '超时订单', name: 'QueryOverTimeOrderView', icon: 'android-send', component: resolve => { require(['@/views/order/QueryOverTimeOrderView.vue'], resolve); } },
             // { access: 1, path: 'OrderOutOfDate', title: '超期订单', name: 'OrderOutOfDate', icon: 'android-send', component: resolve => { require(['@/views/order/OrderOutOfDate.vue'], resolve); } },
             { access: 1, path: 'OrderIndexView', title: '代发快递列表', name: 'OrderIndexView', icon: 'android-send', component: resolve => { require(['@/views/order/OrderIndexView.vue'], resolve); } },
-            { access: 1, path: 'OderInvoiceView', title: '发货单列表', name: 'OderInvoiceView', icon: 'android-send', component: resolve => { require(['@/views/order/OderInvoiceView.vue'], resolve); } }
+            { access: 1, path: 'OderInvoiceView', title: '发货单列表', name: 'OderInvoiceView', icon: 'android-send', component: resolve => { require(['@/views/order/OderInvoiceView.vue'], resolve); } },
+            { access: 1, path: 'OrderRefundList', title: '业务员反馈列表', name: 'OrderRefundList', icon: 'android-send', component: resolve => { require(['@/views/order/OrderRefundList.vue'], resolve); } }
 
         ]
     },
