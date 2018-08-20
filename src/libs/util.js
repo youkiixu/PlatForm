@@ -92,8 +92,8 @@ const locationProtocol = window.location.protocol;
 const ajaxUrl = env === 'development'
 ? locationProtocol + '//localhost:8089/api/'
 : env === 'production'
-? locationProtocol + '//yj.kiy.cn/'
-: locationProtocol + '//yj.kiy.cn/';
+? window.location.protocol + '//' + window.location.host + "/"
+: window.location.protocol + '//' + window.location.host + "/";
 
 util.ajax = axios.create({
     baseURL: ajaxUrl,
