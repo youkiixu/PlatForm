@@ -73,8 +73,8 @@ util.delRow = function (rowId, uid, vm) {
                 'rowState': 'D'
             };
             util.getAjaxData(par, undefined, uid).then((data) => {
-                if (data.map.errMsg || data.map.result != 'ok') {
-                    vm.$Message.error(data.map.errMsg);
+                if (data.errMsg || data.result != 'ok') {
+                    vm.$Message.error(data.errMsg);
                     return false;
                 }
                 vm.$Message.success('删除！');
@@ -278,16 +278,16 @@ util.getDataGrid = function (param, strMethod, uid, vm) {
 
         }
         if (res.status == 200) {
-            if (res.data.map.result == 'err') {
+            if (res.data.result == 'err') {
                 vm.$Loading.error();
                 if (env == 'development') {
                     vm.$Notice.error({
-                        title: res.data.map.errMsg,
-                        desc: res.data.map.sysError
+                        title: res.data.errMsg,
+                        desc: res.data.sysError
                     });
                 } else {
                     vm.$Notice.error({
-                        title: res.data.map.errMsg,
+                        title: res.data.errMsg,
                         desc: '操作失败，请正确操作'
                     });
                 }
@@ -316,17 +316,17 @@ util.tbSave = function (head, dgData, uid, vm) {
     return new Promise(function (resolve, reject) {
         util.postApiData({data: en }, '/Admins/GetData/GetAjaxData').then((res) => {
             try {
-                if (res.map.result == 'ok') {
+                if (res.result == 'ok') {
                     vm.$Notice.success({
-                        title: res.map.msg,
-                        desc: res.map.msg
+                        title: res.msg,
+                        desc: res.msg
                     });
                     vm.$Loading.finish();
-                    resolve(res.map);
+                    resolve(res);
                 } else {
                     vm.$Notice.error({
                         title: '操作失败，请正确操作',
-                        desc: res.map.errMsg
+                        desc: res.errMsg
                     });
                     return reject(res);
                     vm.$Loading.error();
@@ -620,7 +620,7 @@ util.initButton = function (vm) {
     };
 
     this.getAjaxData(par, undefined, 'EC0AD0BE-CF94-4CC8-BE92-54B185C97C76').then((res) => {
-        var res = res.map;
+        var res = res;
         var button = JSON.parse(res.button);
         button.map((item) => {
             vm.buttonGroup.push(item);

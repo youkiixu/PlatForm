@@ -60,7 +60,7 @@ module.exports = merge(webpackBaseConfig, {
                 // target: 'http://yj.kiy.cn/',
                 //  target: 'http://localhost:22669',
                 // target: 'http://192.168.30.37:22669',
-                target: 'http://192.168.0.91:8089',
+                target: 'http://yj.kiy.cn:8089/',
                 pathRewrite: {
                     '^/api': ''
                 },
