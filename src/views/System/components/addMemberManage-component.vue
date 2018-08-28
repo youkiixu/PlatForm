@@ -178,7 +178,7 @@ addRow() {
     if(_this.pubForm.DistributorId != '') {
         par = Object.assign(par , {'DistributorId' : _this.pubForm.DistributorId})
     } else {
-        par = Object.assign(putData , {'DistributorId' : 0})
+        par = Object.assign(par , {'DistributorId' : 0})
     }
 //     for(var key in par){
 //         if(par[key] === ''){
