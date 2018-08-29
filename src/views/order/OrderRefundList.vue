@@ -90,7 +90,8 @@
 <script>
 import Util from "../../libs/util";
 import Cookies from 'js-cookie';
-var kiyapi = 'http://kiy.cn/'
+console.log(window.location)
+var kiyapi = Util.kiyapi
 // kiyapi = 'http://192.168.0.91:8008/'
 // kiyUrl = 'http://192.168.0.91:8008/'
 // kiyapi = '/kiyapi/'
@@ -212,7 +213,7 @@ export default {
         _this.loading = true
       Util.postKiyApi(
             this.form,
-            kiyapi + '/webapi/Himall.OrderRefund.GetRefundAbnormal'
+            '/webapi/Himall.OrderRefund.GetRefundAbnormal'
       )
       .then(res => {
           res = JSON.parse(res)
@@ -322,7 +323,7 @@ export default {
                 }
                  Util.postKiyApi(
                     par,
-                    kiyapi + '/webapi/Himall.OrderRefund.UpdateIsYJRefund'
+                    '/webapi/Himall.OrderRefund.UpdateIsYJRefund'
                 )
                 .then(res => {
                     res = JSON.parse(res)
@@ -355,7 +356,7 @@ export default {
                         Id: selectRowData.OrderRefundId,
                         OrderId: selectRowData.OrderId
                     },
-                    kiyapi + '/webapi/Himall.OrderRefund.CancelRefundAbnormal'
+                    '/webapi/Himall.OrderRefund.CancelRefundAbnormal'
                 )
                 .then(res => {
                     res = JSON.parse(res)

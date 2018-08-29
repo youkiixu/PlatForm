@@ -66,7 +66,7 @@
 <script>
     import Cookies from 'js-cookie';
     import Util from '../libs/util';
-    const basePath=  window.location.protocol+'//'+window.location.host+"/";
+    const basePath=  Util.basePath;
 
     export default {
         data () {

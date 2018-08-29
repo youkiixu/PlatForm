@@ -89,11 +89,15 @@ util.delRow = function (rowId, uid, vm) {
 // http://localhost:8089/api
 // window.location.protocol
 const locationProtocol = window.location.protocol;
+
+util.basePath = window.location.protocol + '//' + window.location.host + "/";
+
 const ajaxUrl = env === 'development'
 ? locationProtocol + '//localhost:8089/api/'
 : env === 'production'
-? window.location.protocol + '//' + window.location.host + "/"
-: window.location.protocol + '//' + window.location.host + "/";
+? util.basePath
+: util.basePath;
+
 
 util.ajax = axios.create({
     baseURL: ajaxUrl,
@@ -102,6 +106,8 @@ util.ajax = axios.create({
 });
 
 util.env = env;
+
+
 
 util.WebSocket = function (vm, wsUrl) {
     var session = Cookies.get('strWebSession');
@@ -175,11 +181,19 @@ util.postOtherApi = function (param, url) {
             });
 };
 
+
+if(ajaxUrl.search('kiy') != -1) {
+    util.kiyapi = 'http://kiy.cn/'
+} else {
+    util.kiyapi = 'http://192.168.0.91:8008/'
+}
+// kiyUrl = 'http://192.168.0.91:8008/''
 util.postKiyApi = function (param, url) {
     // param = {model : param}
+
     return axios.post(ajaxUrl + '/global/post/post',
         {
-            url: url,
+            url: util.kiyapi + url,
             method: 'POST',
             param: JSON.stringify(param)
         }

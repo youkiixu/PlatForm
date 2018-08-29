@@ -127,7 +127,7 @@
             	// 打开加载中
             	_this.spinShow = true
             	Api.QueryOrderList(LogisticsNo , _this).then((res)=>{
-            		var data = res.map.dgData
+            		var data = res.dgData
             		return Promise.resolve(data)
             	}).then((data) => {
             		var mainOrder = data[0]

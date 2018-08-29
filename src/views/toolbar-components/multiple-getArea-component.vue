@@ -57,7 +57,7 @@
                 }
 				_this.cityList2 = []
 				Util.getAjaxData(par , undefined , undefined).then((res) => {
-					var data = res.map.dgData;
+					var data = res.dgData;
 					data.map((item) => {
 						_this.cityList2.push({
 							label: item.Name,
@@ -74,15 +74,6 @@
 					strMethod: 'GetAreaInfo'
 				}
 				_this.cityList3 = []
-				// Util.getAjaxData(par , undefined , undefined).then((res) => {
-				// 	var data = res.map.dgData;
-				// 	data.map((item) => {
-				// 		_this.cityList3.push({
-				// 			label: item.Name,
-				// 			value: item.Code
-				// 		})
-				// 	})
-				// })
 			},
 			getData() {
                 // console.log(data)
@@ -133,7 +124,7 @@
                 	strMethod: 'GetAreaInfo'
                 }
                 Util.getAjaxData(par , undefined , undefined).then((res) => {
-                	var data = res.map.dgData;
+                	var data = res.dgData;
                 	data.map((item) => {
                 		_this.cityList1.push({
                 			label: item.Name,

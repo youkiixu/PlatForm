@@ -421,7 +421,7 @@
                         render: (h) => {
                             return h(expressOrderRelation , { 
                                 props: {
-                                    param: res[1].map.dgData[0],
+                                    param: res[1].dgData[0],
                                     param2: res[0]
                                 }
                             })

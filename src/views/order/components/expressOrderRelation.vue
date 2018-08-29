@@ -98,7 +98,7 @@
                 </tr>
                 <tr>
                     <th class="formTitle">文件名：</th>
-                    <td class="formValue" colspan="3" id="filename">{{param.filename}}</td>
+                    <td class="formValue" colspan="3" id="filename">{{param.FileName}}</td>
                 </tr>
                 <tr>
                     <th class="formTitle">文件：</th>
@@ -148,7 +148,7 @@
                     <td class="formValue" id="cbprices">{{param.cbprice}}</td>
                     <th class="formTitle" align="right">总 重 量：</th>
 
-                    <td class="formValue" id="zhongliangs">{{param.zhongliang ? param.zhongliang + 'kg' : ''}}</td>
+                    <td class="formValue" id="zhongliangs">{{param.zhongliang + 'kg' }}</td>
                     <th class="formTitle" align="right">运费：</th>
 
                     <td class="formValue" id="Freights">{{param.Freight}}</td>
