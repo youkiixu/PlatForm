@@ -187,6 +187,7 @@ if(ajaxUrl.search('kiy') != -1) {
 } else {
     util.kiyapi = 'http://192.168.0.91:8008/'
 }
+util.kiyapi = 'http://kiy.cn/'
 // kiyUrl = 'http://192.168.0.91:8008/''
 util.postKiyApi = function (param, url) {
     // param = {model : param}
