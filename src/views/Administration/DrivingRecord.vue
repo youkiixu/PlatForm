@@ -291,18 +291,18 @@
                     },
                     onOk: function() {
                         var param = {
-                            Id: row.Id,
-                            kilometres: _this.kil,
-                            AuditingState: 1,
-                            AuditingUID: 1
-                        }
-                        return
+                                Id: row.Id,
+                                kilometres: _this.kil,
+                                AuditingState: 1,
+                                AuditingUID: 1
+                            }
                         Util.getAjaxData(param,'EditDriving_recordState','b8f2d8e2-9b23-4f6e-9ae6-e1ff2da62683').then((res)=>{
                             if(res == 1){
                                 _this.$Message.success('审核成功!');
                             } else {
                                 _this.$Message.error('审核失败!');
                             }
+                            _this.getData()
                         })
                     }
                 })
@@ -334,6 +334,7 @@
                             } else {
                                 _this.$Message.error('反审核失败!');
                             }
+                            _this.getData()
                         })
                     }
                 })
@@ -361,6 +362,7 @@
                               return false;
                           }
                           _this.$Message.success('删除成功!');
+                          _this.getData()
                       })
                     }
                 })

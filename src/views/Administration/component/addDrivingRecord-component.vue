@@ -74,11 +74,11 @@
             	},
             	showModal(type) {
                     // type为0是新增，type为1是修改
-                    	this.handleReset()
+                    this.handleReset()
                     this.showEdit = true
                 },
                 ok () {
-                		this.addRow()
+                    this.addRow()
                 },
                 addRow() {
                 	var _this = this;
@@ -94,6 +94,10 @@
                             return false
                         }
                     }).then((res)=>{
+                        if(!res) {
+                            _this.$Message.error('没有找到该用户');
+                            return
+                        }
                         var par = {
                             startTime: Util.nowTime().formatnowdate + ' ' + Util.nowTime().forTime,
                             bShow: 1,
@@ -145,7 +149,9 @@
                             })
                         })
 
-                    })
+                    }).catch (error => {
+                        console.log(error)
+                    }) 
 
 
 

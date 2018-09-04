@@ -103,6 +103,10 @@ import env from '../../../build/env';
             },
             saveImage(par) {
                 var file = this.uploadList[0]
+                if(file == undefined) {
+                    this.$Message.error('必须上传图片');
+                    return
+                }
                 var par = JSON.stringify(Object.assign(par , {LogoPath: file.response}))
                 return Util.postApiData({data: par} , '/BackStage/BasicData/UploadImg').then((res) => {
                     if(res.code == 200){

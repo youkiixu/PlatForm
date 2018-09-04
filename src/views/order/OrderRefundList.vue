@@ -7,9 +7,23 @@
 
         <Card>
             <Row>
-                <Col span="6"> 关键词:
-                <Input v-model="form.OrderId" placeholder="输入平台单号" style="width: 150px" />
+                <Col span="4"> 关键词:
+                    <Input v-model="form.OrderId" placeholder="输入平台单号" style="width: 150px" />
                 </Col>
+                <Col span="4">是否处理：
+                    <Select v-model="form.AuditStatus" clearable style="width:100px">
+                        <Option v-for="item in AuditStatusGroup" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                </Col>
+                <Col span="6">
+                    申请时间
+                    <datePickerCompoent
+                        :showSelect="false"
+                        @startDateChange="startDateChange"
+                        @endDateChange="endDateChange"
+                    ></datePickerCompoent>
+                </Col>
+                
             </Row>
             <Row class="margin-top-10">
                 <Col span="2">
@@ -25,7 +39,7 @@
 
                 <Col span="2">
                     <span style="margin: 0 10px;">
-                        <Button type="primary" icon="search" @click="getData()">搜索</Button>
+                        <Button type="primary" icon="search" @click="searchData()">搜索</Button>
                     </span>
                 </Col>
 
@@ -45,7 +59,6 @@
                 <FormItem label="新商城单号" prop="OrderId">
                     <Input v-model="formValidate.OrderId" placeholder="请输入订单号" disabled></Input>
                 </FormItem>
-                
                 <FormItem label="售后联系人" prop="ContactPerson">
                     <Input v-model="formValidate.ContactPerson" placeholder="请输入售后联系人"></Input>
                 </FormItem>
@@ -68,7 +81,7 @@
                         <Radio label="未付款减款" v-if="!selectRowData.IsCleared"></Radio>
                     </RadioGroup>
                 </FormItem>
-                <FormItem label="退款方式" prop="RefundPayTypeString">
+                <FormItem label="退款方式" prop="RefundPayTypeString" v-if="false">
                     <RadioGroup v-model="formValidate.RefundPayTypeString"  @on-change="RefundPayTypeChange">
                         <Radio label="退到预付款" v-if="selectRowData.IsCleared"></Radio>
                         <Radio label="减订单款" v-if="!selectRowData.IsCleared"></Radio>
@@ -90,7 +103,7 @@
 <script>
 import Util from "../../libs/util";
 import Cookies from 'js-cookie';
-console.log(window.location)
+import datePickerCompoent from '../toolbar-components/datePicker-component';
 var kiyapi = Util.kiyapi
 // kiyapi = 'http://192.168.0.91:8008/'
 // kiyUrl = 'http://192.168.0.91:8008/'
@@ -102,6 +115,9 @@ var format = function(data) {
 }
 
 export default {
+  components: {
+    datePickerCompoent  
+  },
   data() {
     return {
       form: {
@@ -113,6 +129,10 @@ export default {
           {
               title: '平台单号',
               key: 'OrderId'
+          },
+          {
+              title: '买家会员号',
+              key: 'UserId'
           },
           {
               title: '发起人',
@@ -155,6 +175,10 @@ export default {
               title: '异常状态',
               key: 'SellerRemark'
           }
+        //   {
+        //       title: '处理结果',
+        //       key: 'SellerAuditStatusTxt'
+        //   }
       ],
       refundListData: [],
       formValidate: {
@@ -194,8 +218,17 @@ export default {
       transfer: false,
       loading: false,
       Total: 0,
-      selectRowData: {}
-    //   kiyUrl : 'http://kiy.cn/'
+      selectRowData: {},
+      AuditStatusGroup: [
+          {
+              label: '待处理',
+              value: 1
+          },
+          {
+              label: '已处理',
+              value: 5
+          }
+      ]
     };
   },
   computed: {
@@ -217,10 +250,8 @@ export default {
       )
       .then(res => {
           res = JSON.parse(res)
-            console.log(res)
             var data = format(res)
             data = data.data
-            
             _this.refundListData = data.Models
             _this.Total = data.Total
             _this.loading = false
@@ -232,8 +263,15 @@ export default {
       this.selectRowData = data;
     },
     toRefund() {
-        this.transfer = true
         var selectRowData = this.selectRowData
+        if(selectRowData.OrderAmount === 0) {
+            this.$Notice.error({
+                title: '警告',
+                desc: '此单是补印单，不能直接转给售后，需要找到原单重新发起反馈。',
+                duration: 5
+            });
+            return
+        }
         this.formValidate = {
             Id: selectRowData.OrderRefundId,//售后单号 必填
             OrderId: selectRowData.OrderId,//新商城订单号
@@ -252,7 +290,9 @@ export default {
             CertPic3: selectRowData.CertPic3,//图片路径3（可选填）
             CreatorBy: this.userInfo.userId,//申请人ID
             Applicant: this.userInfo.TrueName //申请人
+            
         }
+        this.transfer = true
     },
     pageChange(e) {
         this.form.page_no = e
@@ -293,10 +333,16 @@ export default {
             this.errosMessage('售后类型必须选择')
             return
         }
-        if(formValidate.RefundPayType === '') {
-            this.errosMessage('退款方式必须选择')
-            return
-        }
+        // if(formValidate.RefundPayType === '') {
+            switch (formValidate.RefundType) {
+                case 5:
+                    formValidate.RefundPayType = 4
+                    break;
+                default:
+                    formValidate.RefundPayType = 3
+                    break;
+            }
+        // }
         this.$refs['formValidate'].validate((valid) => {
             if (valid) {
                 var par = {
@@ -312,8 +358,8 @@ export default {
                         CertPic1: formValidate.CertPic1,//图片路径1 （可选填）/`/temp/201807021617471937000.jpg
                         CertPic2: formValidate.CertPic2,//图片路径2 （可选填）
                         CertPic3: formValidate.CertPic3,//图片路径3（可选填）
-                        CreatorBy: formValidate.userId,//申请人ID
-                        Applicant: formValidate.TrueName //申请人
+                        CreatorBy: formValidate.CreatorBy,//申请人ID
+                        Applicant: formValidate.Applicant //申请人
                     }
                 if(par.RefundType != 5) {
                     par = Object.assign(par , {Amount : formValidate.Amount})
@@ -371,6 +417,16 @@ export default {
     },
     open(src) {
         window.open(this.kiyUrl + src)
+    },
+    startDateChange(data) {
+        this.form.StartDate = data
+    },
+    endDateChange(data) {
+        this.form.EndDate = data
+    },
+    searchData() {
+        this.form.page_no = 1
+        this.getData()
     }
   },
   mounted() {
