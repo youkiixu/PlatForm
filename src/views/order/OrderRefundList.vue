@@ -76,15 +76,15 @@
                 </FormItem>
                 <FormItem label="售后类型" prop="RefundTypeString">
                     <RadioGroup v-model="formValidate.RefundTypeString" @on-change="RefundTypeChange">
-                        <Radio label="退货/退款" v-if="selectRowData.IsCleared"></Radio>
-                        <Radio label="补印" v-if="selectRowData.IsCleared"></Radio>
-                        <Radio label="未付款减款" v-if="!selectRowData.IsCleared"></Radio>
+                        <Radio label="退货/退款" v-if="selectRowData.ReceivedAmount > 0"></Radio>
+                        <Radio label="补印" v-if="selectRowData.ReceivedAmount > 0"></Radio>
+                        <Radio label="未付款减款" v-if="selectRowData.ReceivedAmount <= 0"></Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="退款方式" prop="RefundPayTypeString" v-if="false">
                     <RadioGroup v-model="formValidate.RefundPayTypeString"  @on-change="RefundPayTypeChange">
-                        <Radio label="退到预付款" v-if="selectRowData.IsCleared"></Radio>
-                        <Radio label="减订单款" v-if="!selectRowData.IsCleared"></Radio>
+                        <Radio label="退到预付款" v-if="selectRowData.ReceivedAmount > 0"></Radio>
+                        <Radio label="减订单款" v-if="selectRowData.ReceivedAmount <= 0"></Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="退款金额" prop="Amount" v-if="formValidate.RefundTypeString=='退货/退款'">
