@@ -272,10 +272,10 @@
 				_this.spinShow = true
 				Util.getAjaxData(par , undefined , 'F5E180E1-0A54-4E44-AB56-231315E1B193').then((res) => {
 					_this.spinShow = false
-					if(res.map.result == 'ok'){
+					if(res.result == 'ok'){
 						_this.$Notice.success({
 							title: '物流总单保存成功',
-							desc: res.map.msg
+							desc: res.msg
 						})
 						if(HF.LogisticsNo != '') {
 							
@@ -285,7 +285,7 @@
 					} else {
 						_this.$Notice.error({
 							title: '物流总单保存失败',
-							desc: res.map.errMsg
+							desc: res.errMsg
 						})
 					}
 				})
@@ -338,16 +338,16 @@
 				}
 				Util.getAjaxData(par , undefined , 'F5E180E1-0A54-4E44-AB56-231315E1B193').then((res) => {
 					_this.spinShow = false
-					if(res.map.result == 'ok'){
+					if(res.result == 'ok'){
 						_this.$Notice.success({
 							title: '追加子单成功',
-							desc: res.map.msg
+							desc: res.msg
 						})
 						_this.pageType = true
 					} else {
 						_this.$Notice.error({
 							title: '追加子单失败',
-							desc: res.map.errMsg
+							desc: res.errMsg
 						})
 					}
 				})
@@ -429,7 +429,7 @@
 						_this.spinShow = true
 						Util.getAjaxData(par , undefined , 'F5E180E1-0A54-4E44-AB56-231315E1B193').then((res) => {
 							_this.spinShow = false
-							if(res.map.result == 'ok'){
+							if(res.result == 'ok'){
 								_this.$Notice.success({
 									title: '取消成功',
 									desc: `取消成功物流号为: ${HF.LogisticsNo} 的订单`
@@ -438,7 +438,7 @@
 							} else {
 								_this.$Notice.error({
 									title: '保存失败',
-									desc: res.map.errMsg
+									desc: res.errMsg
 								})
 							}
 						})

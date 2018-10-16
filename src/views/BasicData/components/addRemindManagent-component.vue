@@ -161,8 +161,8 @@
                         CreateId: userInfo.userId
                     }
                     Util.getAjaxData(par , undefined , 'DE7E8A2A-DE01-4134-ABCE-97CBC4AA4E22').then((data) => {
-                    	if (data.map.errMsg || data.map.result != 'ok') {
-                    		_this.$Message.error(data.map.errMsg);
+                    	if (data.errMsg || data.result != 'ok') {
+                    		_this.$Message.error(data.errMsg);
                     		return false;
                     	}
                     	_this.$Message.success('设置成功！');
@@ -196,8 +196,8 @@
                     }
 
                     Util.getAjaxData(par , undefined , 'DE7E8A2A-DE01-4134-ABCE-97CBC4AA4E22').then((data) => {
-                    	if (data.map.errMsg || data.map.result != 'ok') {
-                    		_this.$Message.error(data.map.errMsg);
+                    	if (data.errMsg || data.result != 'ok') {
+                    		_this.$Message.error(data.errMsg);
                     		return false;
                     	}
                     	_this.$Message.success('修改成功！');
