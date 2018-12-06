@@ -9,6 +9,7 @@
     v-model="showForm"
     width="350" 
     title="修改快递单号"
+    :loading="true"
     @on-ok="ok">
     <Form :label-width="100">
       <FormItem label="订单号:">
@@ -258,7 +259,7 @@ modifyExPressCompay() {
                   desc:  res.errMsg
                 })
               }
-
+              _this.showForm = false
               _this.$emit('on-success',res.result);
             })
           },
