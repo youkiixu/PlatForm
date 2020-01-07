@@ -398,10 +398,10 @@
                 var _this = this;
                 var getOrderByIdMethod = 'getOrderById'
                 
-                if(data.OrderId.toString().length <= 6) {
+                // if(data.OrderId.toString().length <= 6) {
 
                     getOrderByIdMethod = 'getOrderById_newShop'
-                }
+                // }
                 
                 var par = {
                     $orderId : data.OrderId,

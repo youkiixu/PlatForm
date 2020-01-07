@@ -4,12 +4,12 @@ import semver from 'semver';
 import packjson from '../../package.json';
 import Cookies from 'js-cookie';
 
-function encode (input) {
+function encode(input) {
     var keyStr = 'ABCDEFGHIJKLMNOP' +
-    'QRSTUVWXYZabcdef' +
-    'ghijklmnopqrstuv' +
-    'wxyz0123456789+/' +
-    '=';
+        'QRSTUVWXYZabcdef' +
+        'ghijklmnopqrstuv' +
+        'wxyz0123456789+/' +
+        '=';
     input = escape(input);
     var output = '';
     var chr1, chr2, chr3 = '';
@@ -33,10 +33,10 @@ function encode (input) {
         }
 
         output = output +
-        keyStr.charAt(enc1) +
-        keyStr.charAt(enc2) +
-        keyStr.charAt(enc3) +
-        keyStr.charAt(enc4);
+            keyStr.charAt(enc1) +
+            keyStr.charAt(enc2) +
+            keyStr.charAt(enc3) +
+            keyStr.charAt(enc4);
         chr1 = chr2 = chr3 = '';
         enc1 = enc2 = enc3 = enc4 = '';
     } while (i < input.length);
@@ -82,7 +82,7 @@ util.delRow = function (rowId, uid, vm) {
             });
         }
     });
-};
+}; 
 // http://yj.kiy.cn/
 // http://yj.kiy.cn:9504
 // http://localhost:38407
@@ -92,11 +92,11 @@ const locationProtocol = window.location.protocol;
 
 util.basePath = window.location.protocol + '//' + window.location.host + "/";
 
-const ajaxUrl = env === 'development'
-? locationProtocol + '//localhost:8089/api/'
-: env === 'production'
-? util.basePath
-: util.basePath;
+const ajaxUrl = env === 'development' ?
+    locationProtocol + '//localhost:8089/api/' :
+    env === 'production' ?
+    util.basePath :
+    util.basePath;
 
 
 util.ajax = axios.create({
@@ -154,7 +154,9 @@ util.socketSend = function (param, strMethod, uid) {
         uidString = '245e9b3a-36eb-4599-8805-6c88aca87076';
     }
     if (strMethod != undefined) {
-        var strMethod = {'strMethod': strMethod};
+        var strMethod = {
+            'strMethod': strMethod
+        };
     }
     var paramData = {
         param: param
@@ -164,7 +166,7 @@ util.socketSend = function (param, strMethod, uid) {
         'uid': uidString
     }, strMethod || {});
     if (env == 'development') {
-            // console.log(data);
+        // console.log(data);
     }
 
     var par = JSON.stringify(data);
@@ -173,16 +175,16 @@ util.socketSend = function (param, strMethod, uid) {
 
 util.postOtherApi = function (param, url) {
     return axios.post(url,
-            param
-            ).then((res) => {
-                return Promise.resolve(res.data);
-            }).catch((e) => {
-                return Promise.reject(e);
-            });
+        param
+    ).then((res) => {
+        return Promise.resolve(res.data);
+    }).catch((e) => {
+        return Promise.reject(e);
+    });
 };
 
 
-if(ajaxUrl.search('kiy') != -1) {
+if (ajaxUrl.search('kiy') != -1) {
     util.kiyapi = 'http://kiy.cn/'
 } else {
     util.kiyapi = 'http://192.168.0.91:8008/'
@@ -192,13 +194,11 @@ util.kiyapi = 'http://kiy.cn/'
 util.postKiyApi = function (param, url) {
     // param = {model : param}
 
-    return axios.post(ajaxUrl + '/global/post/post',
-        {
-            url: util.kiyapi + url,
-            method: 'POST',
-            param: JSON.stringify(param)
-        }
-    ).then((res) => {
+    return axios.post(ajaxUrl + '/global/post/post', {
+        url: util.kiyapi + url,
+        method: 'POST',
+        param: JSON.stringify(param)
+    }).then((res) => {
         return Promise.resolve(res.data);
     }).catch((e) => {
         return Promise.reject(e);
@@ -207,14 +207,31 @@ util.postKiyApi = function (param, url) {
 
 util.postApiData = function (param, url) {
     return axios.post(ajaxUrl + url,
-            param
-            ).then((res) => {
-                return Promise.resolve(res.data);
-            }).catch((e) => {
-                return Promise.reject(e);
-            });
+        param
+    ).then((res) => {
+        return Promise.resolve(res.data);
+    }).catch((e) => {
+        return Promise.reject(e);
+    });
 };
 
+// util.getLoginData = function (param) {
+//     const paramData = Object.assign(param, {
+//         'm': 'login'
+//     });
+//     const data = Object.assign(
+//         {'uid': 'd3bd0809-8030-4843-9fed-48878edb2f6a'},
+//         {param: paramData}
+//     )
+//     var en = encode(JSON.stringify(data));
+//     return axios.post(ajaxUrl + '/Admins/GetData/GetAjaxData', {
+//         data: en
+//     }).then((res) => {
+//         return Promise.resolve(res.data);
+//     }).catch((e) => {
+//         console.log(e);
+//     });
+// };
 util.getLoginData = function (param) {
     const data = Object.assign(param, {}, {
 
@@ -237,7 +254,9 @@ util.getAjaxData = function (param, strMethod, uid) {
         uidString = '217141a5-01d0-4696-9500-ae2d82a8cb4c';
     }
     if (strMethod != undefined) {
-        var strMethod = {'strMethod': strMethod};
+        var strMethod = {
+            'strMethod': strMethod
+        };
     }
     var paramData = {
         param: param
@@ -246,7 +265,7 @@ util.getAjaxData = function (param, strMethod, uid) {
         'uid': uidString
     }, strMethod || {});
     // if (env == 'development') {
-        console.log(JSON.stringify(data));
+    console.log(JSON.stringify(data));
     // }
     var en = encode(JSON.stringify(data));
     return axios.post(ajaxUrl + '/Admins/GetData/GetAjaxData', {
@@ -271,7 +290,9 @@ util.getDataGrid = function (param, strMethod, uid, vm) {
         uidString = '217141a5-01d0-4696-9500-ae2d82a8cb4c';
     }
     if (strMethod != undefined) {
-        var strMethod = {'strMethod': strMethod};
+        var strMethod = {
+            'strMethod': strMethod
+        };
     }
     var paramData = {
         param: param
@@ -279,9 +300,9 @@ util.getDataGrid = function (param, strMethod, uid, vm) {
     const data = Object.assign(paramData, {
         'uid': uidString
     });
-                // if (env == 'development') {
-    console.log(JSON.stringify(data));
-                // }
+    // if (env == 'development') {
+    // console.log(JSON.stringify(data));
+    // }
     var en = encode(JSON.stringify(data));
 
     vm.$Loading.start();
@@ -329,7 +350,9 @@ util.tbSave = function (head, dgData, uid, vm) {
     var en = encode(JSON.stringify(par));
     vm.$Loading.start();
     return new Promise(function (resolve, reject) {
-        util.postApiData({data: en }, '/Admins/GetData/GetAjaxData').then((res) => {
+        util.postApiData({
+            data: en
+        }, '/Admins/GetData/GetAjaxData').then((res) => {
             try {
                 if (res.result == 'ok') {
                     vm.$Notice.success({
@@ -442,16 +465,13 @@ util.setCurrentPath = function (vm, name) {
     });
     let currentPathArr = [];
     if (name === 'home_index') {
-        currentPathArr = [
-            {
-                title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
-                path: '',
-                name: 'home_index'
-            }
-        ];
+        currentPathArr = [{
+            title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
+            path: '',
+            name: 'home_index'
+        }];
     } else if ((name.indexOf('_index') >= 0 || isOtherRouter) && name !== 'home_index') {
-        currentPathArr = [
-            {
+        currentPathArr = [{
                 title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
                 path: '/home',
                 name: 'home_index'
@@ -480,16 +500,13 @@ util.setCurrentPath = function (vm, name) {
             }
         })[0];
         if (currentPathObj.children.length <= 1 && currentPathObj.name === 'home') {
-            currentPathArr = [
-                {
-                    title: '首页',
-                    path: '',
-                    name: 'home_index'
-                }
-            ];
+            currentPathArr = [{
+                title: '首页',
+                path: '',
+                name: 'home_index'
+            }];
         } else if (currentPathObj.children.length <= 1 && currentPathObj.name !== 'home') {
-            currentPathArr = [
-                {
+            currentPathArr = [{
                     title: '首页',
                     path: '/home',
                     name: 'home_index'
@@ -504,8 +521,7 @@ util.setCurrentPath = function (vm, name) {
             let childObj = currentPathObj.children.filter((child) => {
                 return child.name === name;
             })[0];
-            currentPathArr = [
-                {
+            currentPathArr = [{
                     title: '首页',
                     path: '/home',
                     name: 'home_index'
@@ -534,7 +550,7 @@ util.openNewPage = function (vm, name, argu, query) {
     let i = 0;
     let tagHasOpened = false;
     while (i < openedPageLen) {
-        if (name === pageOpenedList[i].name) {  // 页面已经打开
+        if (name === pageOpenedList[i].name) { // 页面已经打开
             vm.$store.commit('pageOpenedList', {
                 index: i,
                 argu: argu,
@@ -688,7 +704,10 @@ util.nowTime = function (vm, text) {
     var forTime = h + ':' + m + ':' + s;
 
     return {
-        formatnowdate, forweek, formatwdate, forTime
+        formatnowdate,
+        forweek,
+        formatwdate,
+        forTime
     };
 };
 

@@ -139,7 +139,29 @@
 
             },
             del() {
-
+                let _this = this;
+                let row = this.selectRowData
+                if(row == undefined) {
+                    _this.$Message.warning('请选择一行内容!');
+                }
+                this.$Modal.confirm({
+                    title: '确定删除？',
+                    content:  '是否确认删除？',
+                    onOk: function() {
+                        var par = {
+                            'Id': row.id,
+                            'rowState' : 'D'
+                        }
+                        Util.getAjaxData(par , 'GetHotUpdate').then((data) => {
+                            if (data.errMsg || data.result != 'ok') {
+                                _this.$Message.error(data.errMsg);
+                                return false;
+                            }
+                            _this.$Message.success("删除！");
+                            _this.getData()
+                        })
+                    }
+                })
             },
             ok() {
 
